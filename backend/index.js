@@ -22,6 +22,13 @@ mongoose.connect(config.mongoUri)
   .then(() => console.log('✅ MongoDB connected:', config.mongoUri))
   .catch(err => console.error('❌ MongoDB connection error:', err));
 
+mongoose.connection.on('disconnected', () => {
+  console.warn('⚠️ MongoDB disconnected from:', config.mongoUri);
+});
+mongoose.connection.on('reconnected', () => {
+  console.log('🔄 MongoDB reconnected to:', config.mongoUri);
+});
+
 // ─── JWT Auth Middleware ───────────────────────────
 const verifyToken = (req, res, next) => {
   const authHeader = req.headers.authorization;
@@ -250,8 +257,14 @@ app.put('/api/team/:id',
 
 // ─── Health ───────────────────────────────────────
 app.get('/api/health', (req, res) => {
+  const dbStatus = mongoose.connection.readyState === 1 ? 'connected' : 'disconnected';
   res.json({
     status: 'ok',
+    database: {
+      status: dbStatus,
+      uri: config.mongoUri,
+      name: mongoose.connection.name || 'deployease'
+    },
     env: process.env.NODE_ENV,
     uptime: process.uptime(),
     memory: process.memoryUsage().rss

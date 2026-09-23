@@ -571,6 +571,7 @@ function App() {
         {health ? (
           <div className="health-stats" style={{marginTop: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
             <p><strong>Environment:</strong> {health.env}</p>
+            <p><strong>Database:</strong> <span style={{ color: health.database?.status === 'connected' ? '#10b981' : '#f43f5e', fontWeight: 600 }}>{health.database?.status === 'connected' ? '● Connected' : '○ Disconnected'}</span> <span style={{ fontSize: '0.85rem', color: '#888' }}>({health.database?.uri || 'mongodb://localhost:27017/deployease'})</span></p>
             <p><strong>Uptime:</strong> {Math.floor(health.uptime)}s</p>
             <p><strong>Memory:</strong> {(health.memory / 1024 / 1024).toFixed(2)} MB</p>
           </div>
@@ -599,6 +600,13 @@ function App() {
           <div className="node">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--primary-blue)"><path d="M20 3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H6c-.55 0-1-.45-1-1v-2c0-.55.45-1 1-1h3c.55 0 1 .45 1 1v2c0 .55-.45 1-1 1zm0-5H6c-.55 0-1-.45-1-1V9c0-.55.45-1 1-1h3c.55 0 1 .45 1 1v2c0 .55-.45 1-1 1zm9 5h-7c-.55 0-1-.45-1-1v-2c0-.55.45-1 1-1h7c.55 0 1 .45 1 1v2c0 .55-.45 1-1 1zm0-5h-7c-.55 0-1-.45-1-1V9c0-.55.45-1 1-1h7c.55 0 1 .45 1 1v2c0 .55-.45 1-1 1z"/></svg>
             <span className="node-label">Backend API</span>
+          </div>
+
+          <div className="connection-line"></div>
+
+          <div className="node">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--primary-blue)"><path d="M12 3C7.58 3 4 4.79 4 7v10c0 2.21 3.58 4 8 4s8-1.79 8-4V7c0-2.21-3.58-4-8-4zm0 2c3.87 0 6 1.5 6 2s-2.13 2-6 2-6-1.5-6-2 2.13-2 6-2zm0 14c-3.87 0-6-1.5-6-2v-1.87c1.47.88 3.61 1.37 6 1.37s4.53-.49 6-1.37V17c0 .5-2.13 2-6 2zm0-4c-3.87 0-6-1.5-6-2v-1.87c1.47.88 3.61 1.37 6 1.37s4.53-.49 6-1.37V13c0 .5-2.13 2-6 2zm0-4c-3.87 0-6-1.5-6-2V7.13C7.47 8.01 9.61 8.5 12 8.5s4.53-.49 6-1.37V9c0 .5-2.13 2-6 2z"/></svg>
+            <span className="node-label">MongoDB</span>
           </div>
         </div>
       </div>
